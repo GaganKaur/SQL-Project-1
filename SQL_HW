@@ -1,0 +1,119 @@
+What’s the difference between a left join and a right join.
+
+A LEFT JOIN in SQL is used to join two tables such that the result contains all records from the 1st table and insert NULL values when the 2nd table doesn't match.
+RIGHT means the opposite: keep all records from the 2nd table no matter what and insert NULL values when he 1st table doesn't match.
+
+What about an inner join and an outer join? 
+
+An INNER JOIN is used to to get result rows which are common in both the tables, ie, the intersection part in the venn diagram.
+
+An OUTER JOIN gives all the data from the two tables. Null value appears for data in one table which are not matched in the other table. In other words, OUTER JOIN gives the union all of the two tables.
+
+
+When do you use rank?
+
+Rank function will assign a unique number to each distinct row, but it leaves a gap between the groups. For example, the values in Col_Val below are assigned rank below using the rank function:
+
+Col_Value	Rank
+A			1
+A			1
+A			1
+B			4
+B			4
+C			6
+C			6
+
+As we can see, rank is unique for each distinct value, but with a gap.
+This gap represents number of occurrence. For example: value ‘a’ is repeated thrice and has rank ‘1’, the next rank will be 1+3=4. Same with the next value 4+2=6 and so on.
+
+Dense_Rank()
+
+
+
+
+What about dense_rank? 
+
+This function is similar to Rank with only difference, this will not leave gaps between groups.
+
+So if we use the same query and data we used for the Rank, then we will get:
+
+Col_Value	Dense_Rank
+A			1
+A			1
+A			1
+B			2
+B			2
+C			3
+C			3
+
+Dense_Rank() function is similar to Rank with only difference, this will not leave gaps between groups.
+
+
+When would you use a subquery in a select? 
+
+SQL subquery is usually added in the WHERE Clause of the SQL statement. Most of the time, a subquery is used when you know how to search for a value using a SELECT statement, but do not know the exact value in the database.
+
+When would you use a right join?
+
+A right join will give you all the rows from the table which appears second in the query. We will use a right join when we require all the columns from the second table whether there is a match with the first table or not
+
+When would you use an inner join over an outer join?
+
+An inner join is used when we want only the mached data from the two tables.
+
+What’s the difference between a left outer and a left join
+
+A left join and a left outer join are the same.
+
+When would you use a group by?
+
+Whenever we are using any aggregation function, for example Count(), Max(), Min(), to group the result by one one or more columns.
+
+Describe how you would do data reformatting?
+
+Data reformatting can be done using the "Alter" function.
+
+ALTER TABLE - ADD Column:
+	ALTER table<table_name>
+	ADD column <col_name data_type>
+
+
+ALTER TABLE - DROP Column:
+	ALTER table <table_name>
+	DROP column <col_name>
+
+ALTER TABLE - ALTER Column:
+	ALTER table <table_name>
+	ALTER column <col_name data_type>
+
+
+When would you use a with clause?
+
+Thw with clause allows you to give a sub-query block a name, which can be referenced in several places within the main SQL query.
+
+bonus: When would you use a self join?
+
+A SELF JOIN is used when the query references the data in itself. Its used when there is any relationship between rows in the same table. This happens if the table contains the foreign key that references the table's primary key.
+For example: if we have a table EMPLOYEE in which each row contains the employee data and the employee's managerID:
+
+Employee_ID		Name 	Manager_ID
+1				Anu		3
+2				Kat		3	
+3				Pavan	Null
+4				Denis	2
+5				Mike	2
+
+Now if we want the list of employee name and their managers, we would do a self join as follows:
+
+SELECT e1.Name AS Employee_Name, e2.Name AS Manager_Name
+	FROM employee e1 JOIN employee e2
+	WHERE e1.Manager_ID = e2.Manager_ID;
+
+This will give us:
+
+Employee_Name	Manager_Name
+Anu				Pavan
+Kat				Pavan
+Denis			Kat
+Mike			Kat	
+
